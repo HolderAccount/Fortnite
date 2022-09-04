@@ -1,0 +1,60 @@
+
+
+local MetaHook
+MetaHook = hookmetamethod(game, "__index",function(...)
+    local Arguments = {...}
+    local Self, Index = Arguments[1], Arguments[2]
+    
+    if not checkcaller() then
+        if Self:IsA("Mouse") and Index == "Hit" or Index == "Target" then
+            local IType = Index
+            if _G.SilentTarget ~= nil and isSilentEnabled and _G.SilentTarget[silentAimPart] and _G.SilentTarget:FindFirstChild("I_LOADED_I"):FindFirstChild("Ragdoll").Value == false then
+
+                local TargetPoint = _G.SilentTarget[silentAimPart]
+                local x, v = workspace.CurrentCamera:WorldToViewportPoint(TargetPoint.Position)
+
+                if v then
+                    local SelectedPrediction = silentAimPrediction
+                    local toPos
+                    if PingPrediction then
+                        local PingPred = 0.1
+
+                        if ping <= 30 then
+                            PingPred = 0.1
+                        elseif ping <= 40 and ping >= 31 then
+                            PingPred = 0.1256
+                        elseif ping <= 50 and ping >= 41 then
+                            PingPred = 0.1225
+                        elseif ping <= 60 and ping >= 51 then
+                            PingPred = 0.1229
+                        elseif ping <= 70 and ping >= 61 then
+                            PingPred = 0.131
+                        elseif ping <= 80 and ping >= 71 then
+                            PingPred = 0.134
+                        elseif ping <= 90 and ping >= 81 then
+                            PingPred = 0.136
+                        elseif ping <= 105 and ping >= 91 then
+                            PingPred = 0.138
+                        elseif ping <= 120 and ping >= 106 then
+                            PingPred = 0.146
+                        elseif ping <= 130 and ping >= 121 then
+                            PingPred = 0.149
+                        elseif ping <= 140 and ping >= 131 then
+                            PingPred = 0.151
+                        else
+                            PingPred = 0.161
+                        end
+
+                    toPos = TargetPoint.CFrame + (TargetPoint.Velocity * PingPred)
+                    elseif not ResolverEnabled then
+                        toPos = TargetPoint.CFrame + (TargetPoint.Velocity * SelectedPrediction)
+                    else
+                        toPos = TargetPoint.CFrame + _G.SilentTarget:FindFirstChildOfClass("Humanoid").MoveDirection
+                    end
+                    return Index == IType and toPos
+                end
+            end
+        end
+    end
+    return MetaHook(...)
+end)
