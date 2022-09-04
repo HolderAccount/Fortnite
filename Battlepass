@@ -6,7 +6,7 @@ MetaHook = hookmetamethod(game, "__index",function(...)
     local Self, Index = Arguments[1], Arguments[2]
     
     if not checkcaller() then
-        if Self:IsA("Mouse") and Index == "Hit" or Index == "Target" then
+        if Self:IsA("Mouse") and Index == "Hit" then
             local IType = Index
             if _G.SilentTarget ~= nil and _G.isSilentEnabled and _G.SilentTarget[silentAimPart] and _G.SilentTarget:FindFirstChild("I_LOADED_I"):FindFirstChild("Ragdoll").Value == false then
 
