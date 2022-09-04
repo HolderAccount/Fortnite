@@ -14,7 +14,6 @@ MetaHook = hookmetamethod(game, "__index",function(...)
                 local x, v = workspace.CurrentCamera:WorldToViewportPoint(TargetPoint.Position)
 
                 if v then
-                    local SelectedPrediction = _G.silentAimPrediction
                     local toPos
                     if PingPrediction then
                         local PingPred = 0.1
@@ -47,7 +46,7 @@ MetaHook = hookmetamethod(game, "__index",function(...)
 
                     toPos = TargetPoint.CFrame + (TargetPoint.Velocity * PingPred)
                     elseif not ResolverEnabled then
-                        toPos = TargetPoint.CFrame + (TargetPoint.Velocity * SelectedPrediction)
+                        toPos = TargetPoint.CFrame + (TargetPoint.Velocity * _G.silentAimPrediction)
                     else
                         toPos = TargetPoint.CFrame + _G.SilentTarget:FindFirstChildOfClass("Humanoid").MoveDirection
                     end
