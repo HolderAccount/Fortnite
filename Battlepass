@@ -8,7 +8,7 @@ MetaHook = hookmetamethod(game, "__index",function(...)
     if not checkcaller() then
         if Self:IsA("Mouse") and Index == "Hit" then
             local IType = Index
-            if _G.SilentTarget ~= nil and _G.isSilentEnabled and _G.SilentTarget[silentAimPart] and _G.SilentTarget:FindFirstChild("I_LOADED_I"):FindFirstChild("Ragdoll").Value == false then
+            if _G.SilentTarget ~= nil and _G.isSilentEnabled and _G.SilentTarget[_G.silentAimPart] and _G.SilentTarget:FindFirstChild("I_LOADED_I"):FindFirstChild("Ragdoll").Value == false then
 
                 local TargetPoint = _G.SilentTarget[_G.silentAimPart]
                 local x, v = workspace.CurrentCamera:WorldToViewportPoint(TargetPoint.Position)
